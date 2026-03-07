@@ -1,9 +1,14 @@
 package com.example.finnishpresidents.data.api
-import com.example.finnishpresidents.data.President
+
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface ApiService {
-
-    @GET("posts")
-    suspend fun getPosts(): List<President>
+    @GET("api.php")
+    suspend fun searchWikipedia(
+        @Query("action") action: String = "query",
+        @Query("list") list: String = "search",
+        @Query("srsearch") srsearch: String,
+        @Query("format") format: String = "json"
+    ): WikiResponse
 }
