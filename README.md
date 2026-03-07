@@ -12,6 +12,11 @@
 -	Loading indicator while fetching data.
 -	Fully implemented using Jetpack Compose.
 
+### Libraries Used
+- Retrofit￼ – HTTP networking 
+- Gson￼ – JSON parsing
+- Jetpack Compose￼ – UI toolkit
+
 ### Screenshots
 
 <p align="center">
