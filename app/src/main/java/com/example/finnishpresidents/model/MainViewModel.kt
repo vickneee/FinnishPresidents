@@ -11,16 +11,38 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
+
+    /**
+     * Wiki repository
+     */
     private val repository: WikiRepository = WikiRepository()
+
+    /**
+     * List of presidents
+     */
     var presidents = mutableStateListOf<President>()
+
+    /**
+     * Wiki hits for each president
+     */
     var wikiUiState = mutableStateMapOf<String, Int>()
         private set
-    var loadingState = mutableStateMapOf<String, Boolean>() // Track loading per president
 
+    /**
+     * Loading state for each president
+     */
+    var loadingState = mutableStateMapOf<String, Boolean>()
+
+    /**
+     * Initialize the list of presidents with the data from DataProvider
+     */
     init {
         presidents.addAll(DataProvider.presidents)
     }
 
+    /**
+     * Get Wiki hits for a president
+     */
     fun getHits(name: String) {
         loadingState[name] = true
         viewModelScope.launch(Dispatchers.IO) {
