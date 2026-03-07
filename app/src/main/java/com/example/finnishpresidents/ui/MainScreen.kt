@@ -94,12 +94,14 @@ fun PresidentCard(
                     "Wiki Hits: $it",
                     modifier = Modifier
                         .padding(top = 2.dp),
+                    fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary,
                 )
             }
             if (hits == null && !loading) Text(
                 "Click to see Wiki popularity",
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(top = 2.dp),
                 color = Color.DarkGray
             )
         }
