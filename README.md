@@ -22,9 +22,3 @@
 <p align="center">
 <img src="./res/Screenshot_20260307_222108.png" width="35%" alt="Android Mobile App Screen - Finnish Presidents API compare Example screen"/>
 </p>
-
-## Demo Gif
-
-<p align="center">
-  <img src="./res/Screen_recording_20260307_223044.gif" width="35%" alt="Android Mobile App Demo"/>
-</p>
