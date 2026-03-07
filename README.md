@@ -13,8 +13,7 @@
 -	Fully implemented using Jetpack Compose.
 
 ### Libraries Used
-- Retrofit￼ – HTTP networking 
-- Gson￼ – JSON parsing
+- Retrofit￼ – HTTP networking
 - Jetpack Compose￼ – UI toolkit
 
 ### Screenshots
