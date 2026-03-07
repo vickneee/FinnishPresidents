@@ -14,6 +14,8 @@
 
 ### Libraries Used
 - Retrofit￼ – HTTP networking
+- OkHttp￼ – HTTP client
+- Gson￼ – JSON parser
 - Jetpack Compose￼ – UI toolkit
 
 ### Screenshots

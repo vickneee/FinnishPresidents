@@ -13,10 +13,8 @@ import kotlinx.coroutines.launch
 class MainViewModel : ViewModel() {
     private val repository: WikiRepository = WikiRepository()
     var presidents = mutableStateListOf<President>()
-
     var wikiUiState = mutableStateMapOf<String, Int>()
         private set
-
     var loadingState = mutableStateMapOf<String, Boolean>() // Track loading per president
 
     init {
