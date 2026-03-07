@@ -23,11 +23,8 @@
 <img src="./res/Screenshot_20260307_222108.png" width="35%" alt="Android Mobile App Screen - Finnish Presidents API compare Example screen"/>
 </p>
 
-## Demo Video
+## Demo Gif
 
 <p align="center">
-  <video width="400" controls>
-    <source src="./res/Screen_recording_20260307_223201.webm" type="video/webm">
-    Your browser does not support the video tag.
-  </video>
+  <img src="./res/Screen_recording_20260307_223044.gif" width="35%" alt="Android Mobile App Demo"/>
 </p>
