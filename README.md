@@ -1,7 +1,7 @@
 # Retrofit – Finnish Presidents
 
-## The Counter App
+## Finnish Presidents
 
 <p align="center">
-<img src="./res/Screenshot_20260307_195138.png" width="35%" alt="Android Mobile App Screen - ViewModel Example screen"/>
+<img src="./res/Screenshot_20260307_195545.png" width="35%" alt="Android Mobile App Screen - ViewModel Example screen"/>
 </p>

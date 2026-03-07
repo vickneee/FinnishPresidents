@@ -36,7 +36,7 @@ fun MainScreen(
                 .padding(16.dp)
                 .fillMaxWidth(),
             color = MaterialTheme.colorScheme.primary,
-            fontSize = 24.sp,
+            fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
         )
 
