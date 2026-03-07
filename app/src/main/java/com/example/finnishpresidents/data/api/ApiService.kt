@@ -1,5 +1,6 @@
 package com.example.finnishpresidents.data.api
 
+import com.example.finnishpresidents.repository.WikiResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

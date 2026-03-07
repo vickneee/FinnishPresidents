@@ -4,6 +4,5 @@ data class President(var name: String, var startDuty: Int, var endDuty: Int, var
 
     override fun compareTo(other: President): Int {
         return this.startDuty.compareTo(other.startDuty)
-
     }
 }

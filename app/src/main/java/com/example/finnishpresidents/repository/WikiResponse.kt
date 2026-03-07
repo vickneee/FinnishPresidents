@@ -1,4 +1,4 @@
-package com.example.finnishpresidents.data.api
+package com.example.finnishpresidents.repository
 
 data class WikiResponse(
     val query: WikiQuery

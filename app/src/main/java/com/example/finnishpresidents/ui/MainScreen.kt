@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.finnishpresidents.model.MainViewModel
 import com.example.finnishpresidents.ui.theme.FinnishPresidentsTheme
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun MainScreen(
@@ -65,6 +66,23 @@ fun PresidentCard(
     var hits by remember { mutableStateOf<Int?>(null) }
     var loading by remember { mutableStateOf(false) }
 
+    // Track when the data was last updated
+    var lastFetchTime by remember { mutableStateOf(0L) }
+    val cacheDurationMs = TimeUnit.MINUTES.toMillis(10) // 10 minutes cache
+
+    fun refresh() {
+        val now = System.currentTimeMillis()
+        // Only fetch if data is missing or cache expired
+        if (hits == null || now - lastFetchTime > cacheDurationMs) {
+            loading = true
+            viewModel.fetchWikiHits(presidentName) { result ->
+                hits = result
+                lastFetchTime = now
+                loading = false
+            }
+        }
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -88,22 +106,27 @@ fun PresidentCard(
             )
             Text(text = "$startDuty - $endDuty")
             Text(text = description)
-            if (loading) Text("Loading...")
-            hits?.let {
+
+            if (loading) {
+                Text("Loading...")
+            } else {
+                hits?.let {
+                    Text(
+                        "Wiki Hits: $it",
+                        modifier = Modifier
+                            .padding(top = 2.dp),
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                }
                 Text(
-                    "Wiki Hits: $it",
+                    text = if (hits == null) "Click to see Wiki popularity" else "Tap to refresh",
                     modifier = Modifier
-                        .padding(top = 2.dp),
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary,
+                        .padding(top = 2.dp)
+                        .clickable { refresh() },
+                    color = Color.DarkGray
                 )
             }
-            if (hits == null && !loading) Text(
-                "Click to see Wiki popularity",
-                modifier = Modifier
-                    .padding(top = 2.dp),
-                color = Color.DarkGray
-            )
         }
     }
 }
