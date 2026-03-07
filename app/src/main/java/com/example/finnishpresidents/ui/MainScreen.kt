@@ -10,10 +10,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +19,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.finnishpresidents.model.MainViewModel
 import com.example.finnishpresidents.ui.theme.FinnishPresidentsTheme
-import java.util.concurrent.TimeUnit
 
 @Composable
 fun MainScreen(
@@ -63,25 +58,11 @@ fun PresidentCard(
     description: String,
     viewModel: MainViewModel
 ) {
-    var hits by remember { mutableStateOf<Int?>(null) }
-    var loading by remember { mutableStateOf(false) }
-
-    // Track when the data was last updated
-    var lastFetchTime by remember { mutableStateOf(0L) }
-    val cacheDurationMs = TimeUnit.MINUTES.toMillis(10) // 10 minutes cache
-
-    fun refresh() {
-        val now = System.currentTimeMillis()
-        // Only fetch if data is missing or cache expired
-        if (hits == null || now - lastFetchTime > cacheDurationMs) {
-            loading = true
-            viewModel.fetchWikiHits(presidentName) { result ->
-                hits = result
-                lastFetchTime = now
-                loading = false
-            }
-        }
-    }
+    /**
+     * Observe the hits and loading state from the ViewModel
+     */
+    val hits = viewModel.wikiUiState[presidentName]
+    var loading = viewModel.loadingState[presidentName] ?: false
 
     Card(
         modifier = Modifier
@@ -89,10 +70,7 @@ fun PresidentCard(
             .padding(8.dp)
             .clickable {
                 loading = true
-                viewModel.fetchWikiHits(presidentName) { result ->
-                    hits = result
-                    loading = false
-                }
+                viewModel.getHits(presidentName)
             }
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -113,8 +91,7 @@ fun PresidentCard(
                 hits?.let {
                     Text(
                         "Wiki Hits: $it",
-                        modifier = Modifier
-                            .padding(top = 2.dp),
+                        modifier = Modifier.padding(top = 2.dp),
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary,
                     )
@@ -123,7 +100,7 @@ fun PresidentCard(
                     text = if (hits == null) "Click to see Wiki popularity" else "Tap to refresh",
                     modifier = Modifier
                         .padding(top = 2.dp)
-                        .clickable { refresh() },
+                        .clickable { viewModel.getHits(presidentName) },
                     color = Color.DarkGray
                 )
             }

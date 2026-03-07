@@ -1,9 +1,7 @@
 package com.example.finnishpresidents.model
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finnishpresidents.data.DataProvider
@@ -16,38 +14,26 @@ class MainViewModel : ViewModel() {
     private val repository: WikiRepository = WikiRepository()
     var presidents = mutableStateListOf<President>()
 
-    var wikiUiState: Int by mutableIntStateOf(0)
+    var wikiUiState = mutableStateMapOf<String, Int>()
         private set
 
-    init {
-        getPresidents()
-    }
+    var loadingState = mutableStateMapOf<String, Boolean>() // Track loading per president
 
-    private fun getPresidents() {
-        presidents.clear()
+    init {
         presidents.addAll(DataProvider.presidents)
     }
 
     fun getHits(name: String) {
+        loadingState[name] = true
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val serverResp = repository.hitCountCheck(name)
-                wikiUiState = serverResp.query.searchinfo.totalhits
+                wikiUiState[name] = serverResp.query.searchinfo.totalhits
             } catch (e: Exception) {
                 e.printStackTrace()
-                wikiUiState = -1
-            }
-        }
-    }
-
-    fun fetchWikiHits(presidentName: String, onResult: (Int) -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val response = repository.hitCountCheck(presidentName)
-                onResult(response.query.searchinfo.totalhits)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                onResult(-1)
+                wikiUiState[name] = -1
+            } finally {
+                loadingState[name] = false
             }
         }
     }
