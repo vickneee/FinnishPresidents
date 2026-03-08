@@ -17,13 +17,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.finnishpresidents.model.MainViewModel
+import com.example.finnishpresidents.model.PresidentsViewModel
 import com.example.finnishpresidents.ui.theme.FinnishPresidentsTheme
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = viewModel()
+    viewModel: PresidentsViewModel = viewModel()
 ) {
     Column(modifier = modifier) {
         Text(
@@ -56,7 +56,7 @@ fun PresidentCard(
     startDuty: Int,
     endDuty: Int,
     description: String,
-    viewModel: MainViewModel
+    viewModel: PresidentsViewModel
 ) {
     /**
      * Observe the hits and loading state from the ViewModel

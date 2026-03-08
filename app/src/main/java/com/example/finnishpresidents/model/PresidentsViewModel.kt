@@ -10,7 +10,7 @@ import com.example.finnishpresidents.repository.WikiRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainViewModel : ViewModel() {
+class PresidentsViewModel : ViewModel() {
 
     /**
      * Wiki repository
